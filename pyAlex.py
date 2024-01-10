@@ -1,71 +1,68 @@
 from os import system
 
-def main():
-    global variableList
-    userCommand = input('Enter a command:\n')
-    if userCommand[:4] == "run ":
-        system("cls")
-        file = getFile(userCommand[4:])
-        variableList = []
-        for line in file:
-            keyword = getKeyword(line, 0)
-            if keyword in keywordList:
-                globals()[keyword](line)
-            elif keyword[0] == "Error":
-                print(keyword[1])
-                exit()
-    
 def getFile(file : str):
     lineList = [""]
 
     with open(f'{file}') as file:
+        lastLineReturn = False
         for line in file.readlines():
-            if line[-1:] == "\n":
-                lineList.append(line[:-1])
+            if lastLineReturn:
+                lineList.append(line)
             else:
                 lineList[-1] += line
-    if lineList[0] == "":
-        lineList = lineList[1:]
-    
+            if line[-1:] == "\n":
+                lastLineReturn = True
+                lineList[-1] = lineList[-1][:-1]
+            else:
+                lastLineReturn = False
+    lineList[:] = (line for line in lineList if line != "")
+
     return lineList
 
-def getKeyword(line : str, tabulationNumber : int):
-
-    for position in range(tabulationNumber*4):
-        if line[position] != " ":
-            return ["Error", f"Line X: Missing a tabulation"]
-    line = line[tabulationNumber*4:]
-
-    tempKeyword = ""
-
-    for letter in line:
-        if letter not in [" ", ";"]:
-            tempKeyword += letter
-        elif tempKeyword in keywordList:
-            return tempKeyword
-
-    return ["Error", f"Line X : Line not complete"]
-
-def write(line : str):
-    if line[:6] != "write ":
-        return ["Error", f"Line X : syntax error"]
-    elif (line[6] == '"' or line[6]+line[7] == 'f"') and line[-2:] == '";':
-        print(line[7:][:-2])
-    else:
-        print("error")
+def getKeyword(line : str):
+    if line != line.lstrip():
+        print('Error : getKeyword')
+        exit()
+    firstWord = line.split(" ", 1)[0]
+    if firstWord in keywordList:
+        return firstWord
     
-def let(line : str):
-    simplifiedLine = line.split(" ")
-    if simplifiedLine[0] != "let" or simplifiedLine[1] != ":" or simplifiedLine[4] != "=" or simplifiedLine[5][-1] != ";":
-        return ["Error", f"Line X : syntax error"]
+def exec(linesToExecute : list, func : str):
+    for line in linesToExecute:
+        globals()[line[0]](line[1], func)
+
+def write(line : str, func : str):
+    splitedLine = line.split(" ", 1)
+    if splitedLine[0] != "write" or splitedLine[1][0] != '"' or splitedLine[1][-2:] != '";':
+        print("Error : write")
+        exit()
+    textToPrint = splitedLine[1][1:][:-2]
+    for variable in funcDict[func][1]:
+        if str("{" + variable[0] + "}") in textToPrint:
+            textToPrint = textToPrint.replace(str("{" + variable[0] + "}"), variable[1])
+    print(textToPrint)
+    
+def let(line : str, func : str):
+    splitedLine = line.split(" ")
+    if splitedLine[0] != "let" or splitedLine[2] != ":" or splitedLine[4] != "=" or splitedLine[5][-1] != ";":
+        print("Error : let")
+        exit()
     else:
-        variableList.append([simplifiedLine[3], simplifiedLine[5][:-1], simplifiedLine[2]])
+        funcDict[func][1].append([splitedLine[1], splitedLine[5][:-1], splitedLine[3]])
 
 
 
 if __name__ == "__main__":
     keywordList = ["write", "let"]
-    exec = main()
-    print(variableList)
-    if exec != None:
-        print("Comming soon!")
+    userCommand = input('Enter a command:\n')
+    system("clear")
+    if userCommand[:4] == "run ":
+        funcDict = {
+            "global": [[], []]
+        }
+        file = getFile(userCommand[4:])
+        refactoredLines = []
+        for line in file:
+            keyword = getKeyword(line)
+            refactoredLines.append([keyword, line])
+        exec(refactoredLines, "global")
