@@ -144,10 +144,8 @@ def call(line : str, func : str):
         print("Error : call")
         exit()
     requiredVariableInput = splitedLine[2][:-1].split(",", len(funcDict[splitedLine[1]][2]))
-    print(requiredVariableInput, funcDict[splitedLine[1]][2])
     for numberVariable, requiredVariable in enumerate(funcDict[splitedLine[1]][2]):
-        funcDict[splitedLine[1]][1].append([requiredVariable[0], requiredVariableInput[numberVariable], requiredVariable[2]])
-    print(funcDict)
+        funcDict[splitedLine[1]][1].append([requiredVariable[0], requiredVariableInput[numberVariable], requiredVariable[1]])
     exec(refactorLines(funcDict[splitedLine[1]][0]), splitedLine[1])
     funcDict[func][1] = []
 
