@@ -18,6 +18,52 @@ def getFile(file : str):
     lineList[:] = (line for line in lineList if line != "")
     return lineList
 
+def refactorLines(file : list, func : str):
+    refactoredLines = []
+    forbiddenLines = []
+    for lineNumber, line in enumerate(file):
+        if lineNumber not in forbiddenLines:
+            keyword = getKeyword(line)
+            if keyword == "fn":
+                splitedLineFunc = line.split(" ", 2)
+                if splitedLineFunc[0] != "fn" and splitedLineFunc[2][-1] != ":":
+                    print("Error : fn")
+                    exit()
+                funcDict[splitedLineFunc[1]] = [[], [], []]
+                if splitedLineFunc[2][:-1].split(",") != ['']:
+                    for requiredVar in splitedLineFunc[2][:-1].split(","):
+                        splitedRequiredVar = requiredVar.split(" ", 2)
+                        if splitedRequiredVar[1] != ":" or splitedRequiredVar[2] not in typeList:
+                            print("Error : fn")
+                            exit()
+                        funcDict[splitedLineFunc[1]][2].append([splitedRequiredVar[0], splitedRequiredVar[2]])
+                for newLineNumber, newLine in enumerate(file[lineNumber+1:]):
+                    if newLine.lstrip() != newLine and (len(newLine)-len(newLine.lstrip()))%4 == 0:
+                        funcDict[splitedLineFunc[1]][0].append(newLine[4:]) 
+                        forbiddenLines.append(newLineNumber+lineNumber+1)
+                    else:
+                        break
+            elif keyword == "if":
+                splitedLineIf = line.split(" ", 1)
+                if splitedLineIf[0] != "if" and splitedLineIf[1][-1] != ":":
+                    print("Error : if")
+                    exit()
+                if func not in ifDict:
+                    ifDict[func] = [[], []]
+                for newLineNumber, newLine in enumerate(file[lineNumber+1:]):
+                    if newLine.lstrip() != newLine and (len(newLine)-len(newLine.lstrip()))%4 == 0:
+                        ifDict[func][0].append(newLine[4:])
+                        forbiddenLines.append(newLineNumber+lineNumber+1)
+                    else:
+                        break
+                ifDict[func][1] = splitedLineIf[1][:-1].split("and")
+                for conditionToCorrect in ifDict[func][1]:
+                    conditionToCorrect[:] = (value for value in conditionToCorrect if value != " ")
+            else:
+                refactoredLines.append([keyword, line])
+    print(ifDict)
+    return refactoredLines
+
 def getKeyword(line : str):
     if line != line.lstrip():
         print('Error : getKeyword')
@@ -114,6 +160,7 @@ def var(line : str, func : str):
     if variableIndex == None:
         print(f"Error : variable {splitedLine[1]} does not exist or is not changeable")
         exit()
+    splitedLine[3] = replaceWithVar(splitedLine[3], func)
     if splitedLine[2] == "=" and funcDict[func][1][variableIndex][2] == "str":
         tempResult = splitedLine[3][:-1]
     elif splitedLine[2] == "=" and funcDict[func][1][variableIndex][2] in ["int", "float"]:
@@ -146,38 +193,9 @@ def call(line : str, func : str):
     requiredVariableInput = splitedLine[2][:-1].split(",", len(funcDict[splitedLine[1]][2]))
     for numberVariable, requiredVariable in enumerate(funcDict[splitedLine[1]][2]):
         funcDict[splitedLine[1]][1].append([requiredVariable[0], requiredVariableInput[numberVariable], requiredVariable[1]])
-    exec(refactorLines(funcDict[splitedLine[1]][0]), splitedLine[1])
-    funcDict[func][1] = []
-
-def refactorLines(file : list):
-    refactoredLines = []
-    forbiddenLines = []
-    for lineNumber, line in enumerate(file):
-        if lineNumber not in forbiddenLines:
-            keyword = getKeyword(line)
-            if keyword == "fn":
-                splitedLineFunc = line.split(" ", 2)
-                if splitedLineFunc[0] != "fn" and splitedLineFunc[2][-1] != ":":
-                    print("Error : fn")
-                    exit()
-                funcDict[splitedLineFunc[1]] = [[], [], []]
-                if splitedLineFunc[2][:-1].split(",") != ['']:
-                    for requiredVar in splitedLineFunc[2][:-1].split(","):
-                        splitedRequiredVar = requiredVar.split(" ", 2)
-                        if splitedRequiredVar[1] != ":" or splitedRequiredVar[2] not in typeList:
-                            print("Error : fn")
-                            exit()
-                        funcDict[splitedLineFunc[1]][2].append([splitedRequiredVar[0], splitedRequiredVar[2]])
-                for newLineNumber, newLine in enumerate(file[lineNumber+1:]):
-                    if newLine.lstrip() != newLine and (len(newLine)-len(newLine.lstrip()))%4 == 0:
-                        funcDict[splitedLineFunc[1]][0].append(newLine[4:]) 
-                        forbiddenLines.append(newLineNumber+lineNumber+1)
-                    else:
-                        break
-            else:
-                refactoredLines.append([keyword, line])
-    return refactoredLines
-
+    exec(refactorLines(funcDict[splitedLine[1]][0], func), splitedLine[1])
+    funcDict[splitedLine[1]][1] = []
+    
 def glob(line : str, func : str):
     splitedLine = line.split(" ", 1)
     if splitedLine[0] != "glob" or splitedLine[1][-1] != ";":
@@ -190,8 +208,22 @@ def glob(line : str, func : str):
             funcDict[func][1].pop(variableIndex(variable, func))
         funcDict[func][1].append(funcDict["global"][1][variableIndex(variable, "global")])
 
+def refunc(line : str, func : str):
+    splitedLine = line.split(" ", 2)
+    variablesToReturn = splitedLine[2][:-1].split(",")
+    if splitedLine[0] != "refunc" or splitedLine[2][-1] != ";":
+        print("Error : refunc")
+        exit()
+    if splitedLine[1] not in funcDict:
+        funcDict[splitedLine[1]] = [[], [], []]
+    for variableReturning in variablesToReturn:
+        if variableIndex(variableReturning, splitedLine[1]) != None:
+            funcDict[splitedLine[1]][1][variableIndex(variableReturning, splitedLine[1])] = funcDict[func][1][variableIndex(variableReturning, func)]
+        else:
+            funcDict[splitedLine[1]][1].append(funcDict[func][1][variableIndex(variableReturning, func)])
+
 if __name__ == "__main__":
-    keywordList = ["write", "let", "const", "var", "global"]
+    keywordList = ["write", "let", "const", "var", "global", "reglob"]
     typeList = ["int", "str", "float", "list"]
     userCommand = input('Enter a command:\n')
     system("clear")
@@ -199,6 +231,7 @@ if __name__ == "__main__":
         funcDict = {
             "global": [[], [], []]
         }
+        ifDict = {}
         file = getFile(userCommand[4:])
-        refactoredLines = refactorLines(file)
+        refactoredLines = refactorLines(file, "global")
         exec(refactoredLines, "global")
