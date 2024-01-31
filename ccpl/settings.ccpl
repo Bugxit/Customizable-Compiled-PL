@@ -1,0 +1,2 @@
+endLine := ; -> 1
+comments := // -> 2
