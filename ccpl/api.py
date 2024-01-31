@@ -26,20 +26,32 @@ def getKeyword(line : str, lineNumber : int | None = 'Not specified') -> str:
         else:
             return splitedLine[0]
 
-def stringObject(text : str) -> str:
-    return text
+def inLineObject(text : str, function : str):
+    for variable in varsInfo[function].keys():
+        text = text.replace(variable, str(varsInfo[function][variable]["value"]))
+
+def stringObject(text : str, function : str) -> str:
+    opened = [0, ""]
+    for letter in text:
+        if opened = 1 and letter
+    if "," in text:
+        return stringObject(text.replace(",", '+ " "'), function)
+
+    elif "+" in text:
+        splitedText = text.split("+", 2)
+        return stringObject(str(inLineObject(splitedText[0], function))+str(inLineObject(splitedText[1], function))+splitedText[3], function)
 
 def executeFile(file : list, function : str) -> None:
     for lineNumber in file.keys():
         keyword = getKeyword(file[lineNumber], lineNumber)
         globals()['keyword_' + grammarDict['keywordInfo'][keyword]](file[lineNumber], lineNumber, function)
         print(varsInfo)
+
 """
 Keyword functions
 """
 
 def keyword_pass(line : str, lineNumber : int, function : str) -> None:
-    print('DO NOT USE THAT U UKWAT')
     pass
 
 def keyword_write(line : str, lineNumber : int, function : str) -> None:
@@ -47,7 +59,7 @@ def keyword_write(line : str, lineNumber : int, function : str) -> None:
     toPrintObject = splitedLine[1][:-settingsDict['infoLenght']['endLine']]
     if toPrintObject[0] != '(' or toPrintObject[-1] != ')':
         error('You must use parentheses to specify the text you want to print', lineNumber)
-    print(toPrintObject[1:-1])
+    print(stringObject(toPrintObject[1:-1], function))
 
 def keyword_int(line : str, lineNumber : int, function : str) -> None:
     splitedLine = line.split(" ", 3)
@@ -59,7 +71,8 @@ def keyword_int(line : str, lineNumber : int, function : str) -> None:
         if nameLetter not in alphabetL+alphabetU:
             error("The name of a variable must only contain letters", lineNumber)
     try:
-        varsInfo[function][splitedLine[1].lower()]["value"] = {"value" :int(splitedLine[3][:-settingsDict['infoLenght']['endLine']]), "type" : "int"}
+        print(int(splitedLine[3][:-settingsDict['infoLenght']['endLine']]))
+        varsInfo[function][splitedLine[1].lower()] = {"value" : int(splitedLine[3][:-settingsDict['infoLenght']['endLine']]), "type" : "int"}
     except:
         error("The value specified is not of the correct type", lineNumber)
 
@@ -80,7 +93,7 @@ def keyword_let(line : str, lineNumber : int, function : str) -> None:
 def keyword_var(line : str, lineNumber : int, function : str) -> None:
     splitedLine = line.split(" ", 3)
     if splitedLine[2] == settingsDict["infoKeyword"]["defineSymbol"]:
-        elif splitedLine[1].lower() not in varsInfo[function].keys():
+        if splitedLine[1].lower() not in varsInfo[function].keys():
             error("You cannot modify a variable which does not exist", lineNumber)
         try:
             varType = varsInfo[function][splitedLine[1].lower()]["type"]
@@ -92,11 +105,10 @@ def keyword_var(line : str, lineNumber : int, function : str) -> None:
         if varsInfo[function][splitedLine[1].lower()]["type"] not in ["int", "float"] and splitedLine[2] != settingsDict['infoKeyword']['addition']+settingsDict['infoKeyword']['defineSymbol']:
             error(f'{varsInfo[function][splitedLine[1].lower()]["type"]} objects does not support short modification')
         #*, /, +, - in function of the used thing in splitedLine[2]
-        if splitedLine[2] == 
-            
+        if splitedLine[2]:
+            pass
     else:
         error("You must use the define symbol in order to define an integer", lineNumber)
-
     
 def keyword_transform(line : str, lineNumber : int, function : str) -> None:
     splitedLine = line.split(" ", 3)
@@ -110,5 +122,6 @@ def keyword_transform(line : str, lineNumber : int, function : str) -> None:
         newLetType = splitedLine[3][:-settingsDict['infoLenght']['endLine']]
         if newLetType == "int":
             varsInfo[function][splitedLine[1].lower()]["value"] = int(varsInfo[function][splitedLine[1].lower()]["value"])
+            varsInfo[function][splitedLine[1].lower()]["type"] = f'let-{newLetType}'
     except:
         error("The value you tried to transform does not support the specified type", lineNumber)

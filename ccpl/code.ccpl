@@ -1,2 +1,2 @@
-let truc = 3;
-transform truc -> int;
+int var = 3;
+write (var+2);
