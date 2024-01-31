@@ -1,6 +1,2 @@
-write mest
-super
-//cool
-
- //et
-oe
+let truc = 3;
+transform truc -> int;

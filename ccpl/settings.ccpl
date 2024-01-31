@@ -1,2 +1,8 @@
 endLine := ; -> 1
-comments := // -> 2
+comments := # -> 1
+defineSymbol := = -> 1
+transformSymbol := -> -> 2
+multiplication := * -> 1
+addition := + -> 1
+division : = / -> 1
+substraction := - -> 1
