@@ -1,2 +1,0 @@
-int var = 3;
-write (var+2);

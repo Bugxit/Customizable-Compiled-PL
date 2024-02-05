@@ -1,6 +1,0 @@
-write := write
-int := int
-var := var
-let := let
-transform := transform
-pass := pass
