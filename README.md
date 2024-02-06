@@ -5,6 +5,7 @@
 * [Go](#write-code-in-cpl) - How to write code in CPL?
 * [Go](#use-intern-features-of-cpl) - How to use intern features of CPL?
 * [Go](#how-does-cpl-work) - How does CPL work?
+* [GO](#error-codes) - Error codes...
 
 /!\Please excuse any syntaxical or grammatical error, english is <b>NOT</b> my native language...
 ## What is CPL exactly?
@@ -16,12 +17,11 @@ Customizable Programming Language
 ### - Why "Customizable"?
   As the name might suggest, the main attribute of CPL is to be "Customizable".
   <br>However, most of you already asked yourself what "Customizable" means for a programing language?
-  <br>Don't worry, it is as easy as it can get : Every element (grammar, etc) CPL uses can be changed in to whatever you want
-  <br>For example:
+  <br>Don't worry, it is as easy as it can get : Every element (grammar, etc) CPL uses can be changed in to whatever you want. For example consider:
   ```
 write ("Hello, world!");
   ```
-  <br> And:
+  <br> and:
 ```
 dontwrite (-Hello, world!-)/
 ```
@@ -113,3 +113,19 @@ We use the "write" keyword to show the value associated to IntOne ; This program
 
 ## Use intern features of CPL: 
 ## How does CPL work?
+## Error codes:
+If you are reading this section, it is probably because you encoutered an error while trying to run your CPL code.
+<br>I do admit that some error messages aren't explicit. So, to help you understanding where you messed up 
+<br>CPL implemented error codes. Using error codes is extremly simple, just look for the number indicated in your error message
+<br>in the following table:
+| Error code | Description |
+|------------|-------------|
+|N°134       |Occures when the first word of the line(keyword) is not recognised by the programm - Consider checking if you are using the right settings file - Consider checking if you misspelled it either in your program or your settings file.|
+|N°291       |Occures when you tried to declare a string without using the proper symbol - Consider checking if you are using the right settings file - Consider looking if the whole line is correct|
+|N°305       |Occures when you did not mark the line as finished using the proper symbol - Consider checking if you are using the right settings file - Consider checking if it is not a typo.|
+|N°418       |I'm a teapot... Yes, you will never get this error but you still read this... You have no life...|
+|N°560       |Occures when you closed parentheses without ever opening them - Consider counting parentheses - Consider checking if you forgot an opening parentheses|
+|N°819       |When using the "for" keyword, the third element of the line must <b>always</b> be "in" - Consider checking if you typed it right - Consider checking if you forgot spaces between words.|
+
+<br>PS: Don't search any logic between codes and descriptions, codes are generated randomly.
+
