@@ -62,7 +62,7 @@ write  ->  dontwrite
 
 #### Key informations:
 All keywords are written using the default settings & [ ] indicate the part the developper can modify.
-<br>Also some features are not disponible in every version of CPL, example :
+<br>Also some features are not disponible in every version of CPL, for example:
 <br>[Int8](#int) does not exist in PyCPL (Python does not allow the utilisation of signed-integers)
 #### Write:
 Format :
@@ -90,7 +90,7 @@ Int [String Object] = [Integer Object];
 ```
 Description:
 The int keyword indicates the program to store the value represented by [[Integer Object](#integer-object)] under the name 
-<br>specified as a [[](#string-object)]. The number that may follow the keyword (8 ; 16 or 32) indicates the maximum number of bits
+<br>specified as a [[String Object](#string-object)]. The number that may follow the keyword (8 ; 16 or 32) indicates the maximum number of bits
 <br>the programm will need to use to store the specified value.
 Example:
 ```
