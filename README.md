@@ -64,7 +64,7 @@ write  ->  dontwrite
 All keywords are written using the default settings & [ ] indicate the part the developper can modify.
 <br>Also some features are not disponible in every version of CPL, for example:
 <br>[Int8](#int) does not exist in PyCPL (Python does not allow the utilisation of signed-integers)
-#### Write:
+#### - Write:
 Format :
 ```
 write ([String Object]);
@@ -80,7 +80,7 @@ It will give us the following output:
 ```console
 Hello, world!
 ```
-#### Int:
+#### - Int:
 Format:
 ```
 Int8  [String Object] = [Integer Object];
