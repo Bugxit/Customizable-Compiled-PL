@@ -116,8 +116,7 @@ We use the "write" keyword to show the value associated to IntOne ; This program
 ## Error codes:
 If you are reading this section, it is probably because you encoutered an error while trying to run your CPL code.
 <br>I do admit that some error messages aren't explicit. So, to help you understanding where you messed up 
-<br>CPL implemented error codes. Using error codes is extremly simple, just look for the number indicated in your error message
-<br>in the following table:
+<br>CPL implemented error codes. Using error codes is extremly simple, just look for the number indicated in your error message in the following table:
 | Error code | Description |
 |------------|-------------|
 |N°134       |Occures when the first word of the line(keyword) is not recognised by the programm - Consider checking if you are using the right settings file - Consider checking if you misspelled it either in your program or your settings file.|
