@@ -67,6 +67,15 @@ Format :
 write ([String Object]);
 ```
 Description :
+The write keyword takes a [String Object](#string-object) as an input and shows it in the console.
+Example :
+  ```
+  write ("Hello, world");
+  ```
+  It will give us the following output:
+  ```
+  Hello world
+  ```
 
 ### The Objects:
 - [Go](#integer-object) - Integer Object
