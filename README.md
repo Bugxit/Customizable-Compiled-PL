@@ -58,12 +58,10 @@ write  ->  dontwrite
 - [Go](#write) - Write
 - [Go](#int) - Int
 - [Go](#var) - Var
-### The objects :
+### The Objects :
 - [Go](#integer-object) - Integer Ob
 
 #### Write :
-### The Objects :
-### Write
 
 ## Use intern features of CPL: 
 ## How does CPL work?
