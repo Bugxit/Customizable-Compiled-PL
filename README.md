@@ -77,8 +77,8 @@ write ("Hello, world!");
   
 ```
 It will give us the following output:
-```
-  Hello, world!
+```console
+Hello, world!
 ```
 #### Int:
 Format:
