@@ -60,7 +60,10 @@ write  ->  dontwrite
 - [Go](#int) - Int
 - [Go](#var) - Var
 
-Precision : All keywords are written using the default settings & [] indicate the part the developper can modify.
+#### Key informations:
+All keywords are written using the default settings & [ ] indicate the part the developper can modify.
+<br>Also some features are not disponible in every version of CPL, example :
+<br>[Int8](#int) does not exist in PyCPL (Python does not allow the utilisation of signed-integers)
 #### Write:
 Format :
 ```
@@ -86,17 +89,23 @@ Int32 [String Object] = [Integer Object];
 Int [String Object] = [Integer Object];
 ```
 Description:
+The int keyword indicates the program to store the value represented by [[Integer Object](#integer-object)] under the name 
+<br>specified as a [[](#string-object)]. The number that may follow the keyword (8 ; 16 or 32) indicates the maximum number of bits
+<br>the programm will need to use to store the specified value.
 Example:
 ```
 Int8 IntOne = 13;
 write (f"{IntOne}");
 ```
-We use the "write" keyword to show the value associated to IntOne; Output :
+We use the "write" keyword to show the value associated to IntOne ; This programm returns us the following output :
 ```
 13
 ```
 ### The Objects:
+- [GO](#string-object) - String Object
 - [Go](#integer-object) - Integer Object
+#### String Object:
+#### Integer Object:
 
 ## Use intern features of CPL: 
 ## How does CPL work?
