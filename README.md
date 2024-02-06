@@ -19,11 +19,11 @@ Customizable Programming Language
   <br>Don't worry, it is as easy as it can get : Every element (grammar, etc) CPL uses can be changed in to whatever you want
   <br>For example:
   ```
-write ("Hello world!");
+write ("Hello, world!");
   ```
   <br> And:
 ```
-dontwrite (-Hello world!-)/
+dontwrite (-Hello, world!-)/
 ```
 <br>These two examples both work the same but they just have different settings (first example uses default settings):
 ```
@@ -68,15 +68,33 @@ write ([String Object]);
 ```
 Description :
 The write keyword takes a [String Object](#string-object) as an input and shows it in the console.
-Example :
-  ```
-  write ("Hello, world");
-  ```
-  It will give us the following output:
-  ```
-  Hello world
-  ```
-
+Example:
+```
+write ("Hello, world!");
+  
+```
+It will give us the following output:
+```
+  Hello, world!
+```
+#### Int:
+Format:
+```
+Int8 [String Object] = [Integer Object];
+Int16 [String Object] = [Integer Object];
+Int32 [String Object] = [Integer Object];
+Int [String Object] = [Integer Object];
+```
+Description:
+Example:
+```
+Int8 IntOne = 13;
+write (f"{IntOne}");
+```
+We use the "write" keyword to show the value associated to IntOne; Output :
+```
+13
+```
 ### The Objects:
 - [Go](#integer-object) - Integer Object
 
