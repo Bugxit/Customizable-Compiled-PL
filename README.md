@@ -1,4 +1,4 @@
-# (C/I)Customizable Programming Language
+## (C/I)Customizable Programming Language
 ## Summary :
 * [Go](#what-is-cpl-exactly) - What is CPL?
 * [Go](#get-started-with-cpl) - How to get started with CPL?
@@ -55,7 +55,9 @@ write  ->  dontwrite
 ## Get started with CPL!
 ## Write code in CPL:
 ### The Keywords :
-- Write
+- Write [Go](#write)
+- Int   [Go](#int)
+- Var   [Go](#var)
 ### The Objects :
 ### Write
 
