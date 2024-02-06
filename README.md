@@ -55,9 +55,13 @@ write  ->  dontwrite
 ## Get started with CPL!
 ## Write code in CPL:
 ### The Keywords :
-- Write [Go](#write)
-- Int   [Go](#int)
-- Var   [Go](#var)
+- [Go](#write) - Write
+- [Go](#int) - Int
+- [Go](#var) - Var
+### The objects :
+- [Go](#integer-object) - Integer Ob
+
+#### Write :
 ### The Objects :
 ### Write
 
