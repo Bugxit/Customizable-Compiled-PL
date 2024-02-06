@@ -28,8 +28,8 @@ dontwrite (-Hello world!-)/
 <br>These two examples both work the same but they just have different settings (first example uses default settings):
 ```
 write  ->  dontwrite
-"      ->      -
-;      ->      /
+  "    ->      -
+  ;    ->      /
 ```
 
 ### - What if my friend and I don't use the same settings?
@@ -54,6 +54,10 @@ write  ->  dontwrite
 
 ## Get started with CPL!
 ## Write code in CPL:
-### Write :
+### The Keywords :
+- Write
+### The Objects :
+### Write
+
 ## Use intern features of CPL: 
 ## How does CPL work?
