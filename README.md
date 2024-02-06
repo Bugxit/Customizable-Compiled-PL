@@ -60,8 +60,13 @@ write  ->  dontwrite
 - [Go](#int) - Int
 - [Go](#var) - Var
 #### Write:
+Format :
+```
+write ("Hello, world!");
+```
+
 ### The Objects:
-- [Go](#integer-object) - Integer Ob
+- [Go](#integer-object) - Integer Object
 
 ## Use intern features of CPL: 
 ## How does CPL work?
