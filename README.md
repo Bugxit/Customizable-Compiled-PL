@@ -49,10 +49,11 @@ write  ->  dontwrite
   
 ### - Who is working on the CPL project?
   Sadly, I (aka Bugxit) am working alone on the CPL project, which explains the lack of updates and new features.
-  <br>But, being alone doesn't mean you can produce things as good as a team (or does it?). 
-  <br>I am still taking this project seriously and I am trying my best to make this to make this PL the best it can be!
+  <br>But, being alone doesn't mean you can't produce things as good as a team (or does it?). 
+  <br>I am still taking this project seriously and I am trying my best to make this PL the best it can be!
 
 ## Get started with CPL!
 ## Write code in CPL:
+### Write :
 ## Use intern features of CPL: 
 ## How does CPL work?
