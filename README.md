@@ -59,11 +59,14 @@ write  ->  dontwrite
 - [Go](#write) - Write
 - [Go](#int) - Int
 - [Go](#var) - Var
+
+Precision : All keywords are written using the default settings & [] indicate the part the developper can modify.
 #### Write:
 Format :
 ```
-write ("Hello, world!");
+write ([String Object]);
 ```
+Description :
 
 ### The Objects:
 - [Go](#integer-object) - Integer Object
