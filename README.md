@@ -83,10 +83,10 @@ Hello, world!
 #### Int:
 Format:
 ```
-Int8 [String Object] = [Integer Object];
+Int8  [String Object] = [Integer Object];
 Int16 [String Object] = [Integer Object];
 Int32 [String Object] = [Integer Object];
-Int [String Object] = [Integer Object];
+Int   [String Object] = [Integer Object];
 ```
 Description:
 The int keyword indicates the program to store the value represented by [[Integer Object](#integer-object)] under the name 
@@ -98,13 +98,17 @@ Int8 IntOne = 13;
 write (f"{IntOne}");
 ```
 We use the "write" keyword to show the value associated to IntOne ; This programm returns us the following output :
-```
+```console
 13
 ```
 ### The Objects:
-- [GO](#string-object) - String Object
+- [Go](#string-object) - String Object
 - [Go](#integer-object) - Integer Object
+- [Go](#boolean-object) - Boolean Object
+#### Key informations:
+
 #### String Object:
+
 #### Integer Object:
 
 ## Use intern features of CPL: 
