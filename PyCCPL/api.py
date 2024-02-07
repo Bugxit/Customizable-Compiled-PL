@@ -7,8 +7,8 @@ def getInfos(func : dict) -> None:
     funcInfos, varsInfo = func, {'global' : {}}
     typeList = ['int', 'str' ,'float', 'bool', 'list', 'dict']
 
-def error(message : str, lineNumber : int | None = 'Not specified') -> None:
-    print(f'Error LN°{lineNumber} -> {message}')
+def error(errorMessage : str, lineNumber : int | None = 'Not specified', errorCode : int | None = 'Not specified') -> None:
+    print(f'Error LN°{lineNumber} -> {errorMessage} - {errorCode}')
     exit()
 
 def getKeyword(line : str, lineNumber : int | None = 'Not specified') -> str:
@@ -17,16 +17,18 @@ def getKeyword(line : str, lineNumber : int | None = 'Not specified') -> str:
     if len(splitedLine) == 1:
         if splitedLine[0][-1] == ";":
             splitedLine[0] = splitedLine[0][:-1]
+        else:
+            error('Line never marked as finished', lineNumber, 305)
         if splitedLine[0] not in keywordsList:
-            error('Keyword used does not exist', lineNumber)
+            error('Keyword used does not exist', lineNumber, 134)
         else:
             return splitedLine[0]
     else:
         endMark = False
-        if splitedLine[0] in ['write', 'int', 'var', 'let', 'transform', 'pass', 'call']:
+        if splitedLine[0] in ['write', 'int', 'var', 'let', 'transform', 'call']:
             endMark = True
         if splitedLine[0] not in keywordsList:
-            error('Keyword used does not exist', lineNumber)
+            error('Keyword used does not exist', lineNumber, 134)
         elif line[-1] != ";" and endMark:
             error('Syntax error : line is never marked as finished', lineNumber)
         else:
