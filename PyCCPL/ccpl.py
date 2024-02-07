@@ -58,7 +58,7 @@ def getCodeFile(fileName : str, filePath : str | None = '') -> dict:
     global funcInfos
     funcInfos = {}
     finalFile = {}
-    with open(f'{filePath}{fileName}.ccpl') as codeFile:
+    with open(f'{filePath}{fileName}.cpl') as codeFile:
         codeFile = codeFile.readlines()
     for lineNumber, line in enumerate(codeFile):
         line = line.rstrip()
