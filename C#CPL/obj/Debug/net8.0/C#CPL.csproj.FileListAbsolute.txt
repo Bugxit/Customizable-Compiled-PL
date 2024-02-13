@@ -1,0 +1,14 @@
+D:\NSI Travail\CPL-Development-main\C#CPL\bin\Debug\net8.0\C#CPL.exe
+D:\NSI Travail\CPL-Development-main\C#CPL\bin\Debug\net8.0\C#CPL.deps.json
+D:\NSI Travail\CPL-Development-main\C#CPL\bin\Debug\net8.0\C#CPL.runtimeconfig.json
+D:\NSI Travail\CPL-Development-main\C#CPL\bin\Debug\net8.0\C#CPL.dll
+D:\NSI Travail\CPL-Development-main\C#CPL\bin\Debug\net8.0\C#CPL.pdb
+D:\NSI Travail\CPL-Development-main\C#CPL\obj\Debug\net8.0\C#CPL.GeneratedMSBuildEditorConfig.editorconfig
+D:\NSI Travail\CPL-Development-main\C#CPL\obj\Debug\net8.0\C#CPL.AssemblyInfoInputs.cache
+D:\NSI Travail\CPL-Development-main\C#CPL\obj\Debug\net8.0\C#CPL.AssemblyInfo.cs
+D:\NSI Travail\CPL-Development-main\C#CPL\obj\Debug\net8.0\C#CPL.csproj.CoreCompileInputs.cache
+D:\NSI Travail\CPL-Development-main\C#CPL\obj\Debug\net8.0\C#CPL.dll
+D:\NSI Travail\CPL-Development-main\C#CPL\obj\Debug\net8.0\refint\C#CPL.dll
+D:\NSI Travail\CPL-Development-main\C#CPL\obj\Debug\net8.0\C#CPL.pdb
+D:\NSI Travail\CPL-Development-main\C#CPL\obj\Debug\net8.0\C#CPL.genruntimeconfig.cache
+D:\NSI Travail\CPL-Development-main\C#CPL\obj\Debug\net8.0\ref\C#CPL.dll
