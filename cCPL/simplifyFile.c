@@ -38,7 +38,7 @@ void writeFileWithoutComments(char file[][1000], char destination[], int oldFile
     int zeroToWrite;
     int maxZero = floor(log10(oldFileLineNumber));
     for (int lineNumber = 0; lineNumber < oldFileLineNumber; lineNumber++){
-        zeroToWrite = (lineNumber != 0) ? maxZero - floor(log10(lineNumber)) : maxZero-1;
+        zeroToWrite = (lineNumber != 0) ? maxZero - floor(log10(lineNumber)) : maxZero;
         printf("%d", zeroToWrite);
         for (int zeroRequired = 0; zeroRequired < zeroToWrite; zeroRequired++){fprintf(simplifiedFile, "0");}
         fprintf(simplifiedFile, "%d -", lineNumber+1);
