@@ -8,9 +8,10 @@
 void error(char[], int, int);
 void simplifyFile(char[], char[]);
 int getNumberOfLinesFile(char[]);
+char * removeString(char[]);
 
 int main(){
-    simplifyFile("../code.icpl", "../simpcode.icpl");
+    simplifyFile("code.icpl", "simpcode.icpl");
 }
 
 int getNumberOfLinesFile(char path[]){
@@ -41,19 +42,21 @@ void simplifyFile(char path[], char destination[]){
         isToIgnore = true;
         fgets(currentLine, 1000, oldFile);
         for (int i = 0; i < strlen(currentLine); i++){
-            if (!isspace(currentLine[i])){
+            if (!isspace(currentLine[i]) && currentLine[i] != EOF){
                 isToIgnore = false;
                 break;
             }
         }
-        if (sizeof(currentLine)>2 && currentLine[0] == '/' && currentLine[1] == '/') isToIgnore = true;
-        if (isToIgnore == 0) fprintf(simplifiedFile, currentLine);
+        if (isToIgnore == 0) fprintf(simplifiedFile, "%i-%s",lineNumber, currentLine);
         lineNumber++;
     }
     fclose(oldFile);
     fclose(simplifiedFile);
 }
 
+char * removeString(char line[]){
+    return line;
+}
 void error(char message[], int errorCode, int lineNumber){
     printf("Error Line n°%i : %s", lineNumber, message);
     exit(1);
