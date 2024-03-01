@@ -1,2 +1,0 @@
-write ("yes");
-write("yes");
