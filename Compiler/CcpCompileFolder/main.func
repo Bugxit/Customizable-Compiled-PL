@@ -1,0 +1,2 @@
+write ("yes");
+write("yes");
