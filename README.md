@@ -39,13 +39,7 @@ write  ->  dontwrite
   <br>In case you want to learn more about doing this : please follow [this link](#use-intern-features-of-cpl)
 
 ### - In what language is CPL developed?
-  As you may have noticed while looking at this repository, CPL is developed in multiple programming languages
-  <br>such as Python or C (Comming soon...)
-  <br>What differentiates them are that some versions are Compiled and others are Interpreted(Python...)
-  
-### - What version should I choose?
-  Your last option should be the Python version because it a test version used to, well, test features.
-  <br>In my opinion (and it matters alot) the best version is the C version(Still comming soon...).
+  CPL is a language compiled in C++ using a Python compiler, however this repository includes a Python Interpreter used to test new features.
   
 ### - Who is working on the CPL project?
   Sadly, I (aka Bugxit) am working alone on the CPL project, which explains the lack of updates and new features.
