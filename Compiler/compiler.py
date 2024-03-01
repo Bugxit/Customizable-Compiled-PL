@@ -1,7 +1,9 @@
 from sys import argv
 from os import mkdir, path
 from shutil import rmtree
+
 import verify
+import getName
 
 def getKeyword(line : str) -> str:
     keyword = line.split(' ', 1)[0].split('(', 1)[0]
@@ -52,15 +54,16 @@ if __name__ == "__main__":
         exit(1)
     fileArray = getFile(argv[1])
     keywordArray, fileArray = fileArray[1], fileArray[0]
-    if path.exists("./CcpCompileFolder"):
-        rmtree("./CcpCompileFolder")
-    mkdir("./CcpCompileFolder")
+    if path.exists("./CPLCompileFolder"):
+        rmtree("./CPLCompileFolder")
+    mkdir("./CPLCompileFolder")
     inBlockCode = False
     currentCodeBlock = {"name" : "main", "type" : "func"}
-    dataFile = open(f"./CcpCompileFolder/main.func", 'a')
+    dataFile = open(f"./CPLCompileFolder/main.func", 'a')
     for lineNumber, line in enumerate(fileArray):
         keyword = keywordArray[lineNumber]
         if keyword in ["func", "class"]:
-            pass
+            inBlockCode = True
+            currentCodeBlock["name"], currentCodeBlock["type"] = getattr(getName, f"keyword_{keyword}"), keyword
         else:
             dataFile.write(line+'\n')
