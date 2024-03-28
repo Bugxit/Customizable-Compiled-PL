@@ -71,6 +71,7 @@ subNumsNotLoop:
     jge subNumsNotLoop
 
 addNums:
+    mov r15, 0
     mov rdi, [rsp+32]
     mov qword [rsp+32], 0
     mov rsi, [rsp+24]
