@@ -87,6 +87,8 @@ divNumsCMPLoop:
     cmp rax, [rsp+8]
     jge divNumsCMPLoop
 
+		ret
+
 divSub:
     subI qword [rsp+16], qword [rsp+8], qword [rsp+24]
     mov rsi, [rsp+24]
