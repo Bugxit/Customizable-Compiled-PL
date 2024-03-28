@@ -137,6 +137,10 @@ addNumsLoop:
     add [rbx], rdi
     mov rdi, rsi
 
+    mov rcx, 1
+    cmp qword [rbx], qword 0
+    cmovne r15, rcx
+
     sub rax, 8
     sub rbx, 8
     
