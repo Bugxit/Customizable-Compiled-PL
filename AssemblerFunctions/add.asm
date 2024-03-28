@@ -6,13 +6,23 @@ temp resb 1
 section .data
 num1 dq 0, 0, 18446744073709551615
 
-num2 dq 0, 0, 2
+num2 dq 0, 0, 3
 
 section .text
-_start:
+%macro addI 3
+    push 0
+    push %3
+    push %1
+    push %2
     call addNums
-
-    mov rbx, [num1+8]
+    pop rbx
+    pop rbx
+    pop rbx
+    pop rbx
+%endmacro
+_start:
+    addI num1, num2, 3
+    mov rbx, [num1+16]
 loop:
     mov rax, rbx
     and rax, 1
@@ -34,10 +44,13 @@ loop:
     syscall
 
 addNums:
-    mov rdi, 0
-    mov rsi, 0
-    lea rax, [num1+16]
-    lea rbx, [num2+16]
+    mov rdi, [rsp+32]
+    mov rsi, [rsp+24]
+    shl rsi, 3
+    mov rax, [rsp+16]
+    mov rbx, [rsp+8]
+    add rax, rsi
+    add rbx, rsi
 
 addNumsLoop:
     mov rcx, [rax]
@@ -59,11 +72,18 @@ addNumsLoop:
     cmp rax, num1
     jge addNumsLoop
 
-    cmp qword [num2], 0
+    mov rsi, [rsp+24]
+    shl rsi, 3
+    mov rbx, [rsp+8]
+    add rbx, rsi
+addNumsCheckLoop:
+
+    cmp qword [rbx], 0
     jne addNums
-    cmp qword [num2+8], 0
-    jne addNums
-    cmp qword [num2+16], 0
-    jne addNums
+
+    sub rbx, 8
+
+    cmp rbx, [rsp+8]
+    jge addNumsCheckLoop
 
     ret
