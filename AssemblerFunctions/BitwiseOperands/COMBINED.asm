@@ -152,13 +152,6 @@ __xorLoop:
 	pop rbx
 	pop rax
 	ret
-global _start
-
-section .data
-num1 dq 0, 4, 3
-num2 dq 0, 5, 5
-
-section .text
 
 __Mov:
 	push rax
@@ -180,7 +173,7 @@ __movLoop:
 	sub rbx, 8
 
 	cmp rax, [rsp+32]
-	jge __andLoop
+	jge __movLoop
 
 	pop rcx
 	pop rbx
