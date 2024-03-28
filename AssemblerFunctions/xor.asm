@@ -18,7 +18,7 @@ section .text
 _start:
 	__macroXor num1, num2, 3
 
-	mov rax, 1
+	mov rax, 60
 	mov rdi, [num1+16]
 	syscall
 
