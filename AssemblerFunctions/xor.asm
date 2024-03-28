@@ -1,8 +1,8 @@
 global _start
 
 section .data
-num1 dq 0, 0, 0
-num2 dq 0, 0, 7
+num1 dq 0, 4, 3
+num2 dq 0, 5, 5
 
 section .text
 %macro __macroXor 3
@@ -10,16 +10,14 @@ section .text
 	push %2
 	push %1
 	call __xor
-	pop rax
-	pop rax
-	pop rax
+    add rsp, 24
 %endmacro
 
 _start:
 	__macroXor num1, num2, 3
 
-	mov rax, 60
-	mov rdi, [num1+16]
+    mov rax, 60
+	mov rdi, [num1+8]
 	syscall
 
 __xor:
@@ -48,5 +46,3 @@ __xorLoop:
 	pop rbx
 	pop rax
 	ret
-
-	
