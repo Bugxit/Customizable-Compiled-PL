@@ -104,14 +104,8 @@ addNumsLoop:
     shl rsi, 3
     mov rbx, [rsp+8]
     add rbx, rsi
-addNumsCheckLoop:
 
-    cmp qword [rbx], 0
-    jne addNums
-
-    sub rbx, 8
-
-    cmp rbx, [rsp+8]
-    jge addNumsCheckLoop
+    cmp r15, 1
+    je addNums
 
     ret
