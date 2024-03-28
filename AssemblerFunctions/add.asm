@@ -4,7 +4,7 @@ section .bss
 temp resb 1
 
 section .data
-num1 dq 0, 0, 18446744073709551615
+num1 dq 0, 0, 32
 
 num2 dq 0, 0, 3
 
@@ -44,6 +44,7 @@ loop:
     syscall
 
 addNums:
+    mov r15, 0
     mov rdi, [rsp+32]
     mov rsi, [rsp+24]
     shl rsi, 3
@@ -66,6 +67,10 @@ addNumsLoop:
     add [rbx], rdi
     mov rdi, rsi
 
+    mov rcx, 1
+    cmp qword [rbx], qword 0
+    cmovne r15, rcx
+
     sub rax, 8
     sub rbx, 8
     
@@ -76,14 +81,8 @@ addNumsLoop:
     shl rsi, 3
     mov rbx, [rsp+8]
     add rbx, rsi
-addNumsCheckLoop:
 
-    cmp qword [rbx], 0
-    jne addNums
-
-    sub rbx, 8
-
-    cmp rbx, [rsp+8]
-    jge addNumsCheckLoop
+    cmp r15, 1
+    je addNums
 
     ret
