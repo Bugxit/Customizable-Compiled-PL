@@ -5,22 +5,22 @@ num1 dq 0, 4, 3
 num2 dq 0, 5, 5
 
 section .text
-%macro __macroAnd 3
+%macro __macroMov 3
 	push %3
 	push %2
 	push %1
-	call __and
+	call __mov
     add rsp, 24
 %endmacro
 
 _start:
-	__macroAnd num1, num2, 3
+	__macroMov num1, num2, 3
 
     mov rax, 60
 	mov rdi, [num1+16]
 	syscall
 
-__and:
+__Mov:
 	push rax
 	push rbx
 	push rcx
@@ -32,7 +32,7 @@ __and:
 	add rax, rcx
 	add rbx, rcx
 
-__andLoop:
+__movLoop:
 	mov rcx, [rbx]
 	mov [rax], rcx
 
