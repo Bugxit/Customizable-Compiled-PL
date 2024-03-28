@@ -44,6 +44,9 @@ __xorLoop:
 	cmp rax, [rsp+32]
 	jge __xorLoop
 
+	pop rcx
+	pop rbx
+	pop rax
 	ret
 
 	
