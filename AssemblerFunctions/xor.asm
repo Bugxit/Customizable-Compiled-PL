@@ -5,13 +5,22 @@ num1 dq 0, 0, 0
 num2 dq 0, 0, 7
 
 section .text
-%macro 3
+%macro __macroXor 3
+	push %3
+	push %2
+	push %1
+	call __xor
+	pop rax
+	pop rax
+	pop rax
 %endmacro
+
 _start:
-	push 3
-	push num2
-	push num1
-	jmp __xor
+	__macroXor num1, num2, 3
+
+	mov rax, 1
+	mov rdi, [num1+16]
+	syscall
 
 __xor:
 	push rax
@@ -33,5 +42,7 @@ __xorLoop:
 
 	cmp rax, [rsp+32]
 	jge __xorLoop
+
+	ret
 
 	
