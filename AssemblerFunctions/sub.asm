@@ -1,3 +1,4 @@
+;Not working for the moment
 global _start
 
 section .bss
@@ -15,10 +16,7 @@ section .text
     push %1
     push %2
     call addNums
-    pop rbx
-    pop rbx
-    pop rbx
-    pop rbx
+    add rsp, 32
 %endmacro
 
 %macro subI 3
@@ -27,30 +25,11 @@ section .text
     push %1
     push %2
     call subNums
-    pop rbx
-    pop rbx
-    pop rbx
-    pop rbx
+    add rsp, 32
 %endmacro
 
 _start:
     subI num1, num2, 3
-    mov rbx, [num1+16]
-loop:
-    mov rax, rbx
-    and rax, 1
-    add rax, '0'
-    mov [temp], rax
-    mov rax, 1
-    mov rdi, 1
-    mov rsi, temp
-    mov rdx, 1
-    syscall
-
-    shr rbx, 1
-
-    cmp rbx, 0
-    jne loop
 
     mov rax, 60
     mov rdi, [num1+16]
@@ -71,21 +50,33 @@ subNumsNotLoop:
     jge subNumsNotLoop
 
 addNums:
+    push r15
+    push rdi
+    push rsi
+    push rax
+    push rbx
+
     mov r15, 0
-    mov rdi, [rsp+32]
-    mov qword [rsp+32], 0
-    mov rsi, [rsp+24]
+
+    mov rdi, [rsp+72]
+    mov rsi, [rsp+64]
+    dec rsi
+    mov rax, [rsp+56]
+    mov rbx, [rsp+48]
+
     shl rsi, 3
-    mov rax, [rsp+16]
-    mov rbx, [rsp+8]
     add rax, rsi
-    add rbx, rsi
+    add rbx, rsi        
 
 addNumsLoop:
+    push rcx
+    push rdx
     mov rcx, [rax]
     mov rdx, [rbx]
     xor [rax], rdx
     and [rbx], rcx
+    pop rdx
+    pop rcx
 
     rol qword [rbx], 1
 
@@ -113,4 +104,9 @@ addNumsLoop:
     cmp r15, 1
     je addNums
 
+    pop rbx
+    pop rax
+    pop rsi
+    pop rdi
+    pop r15
     ret
