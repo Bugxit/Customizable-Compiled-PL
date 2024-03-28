@@ -41,11 +41,15 @@ write  ->  dontwrite
 ### - Is CPL compiled?
   CPL is a language compiled in NASM for the x86-64 CPU family, however this temporary and
   <br>CPL will soon support more CPUs. 
-  
+
 ### - Who is working on the CPL project?
   Sadly, I (aka Bugxit) am working alone on the CPL project, which explains the lack of updates and new features.
   <br>But, being alone doesn't mean you can't produce things as good as a team (or does it?). 
   <br>I am still taking this project seriously and I am trying my best to make this PL the best it can be!
+
+### - What are the goals of CPL?
+  Since CPL is compiled it is an extremely fast language, further more it aims at allowing a faster approach 
+  <br>to the Bignums used in Python & Javascript.
 
 ## Get started with CPL!
 ## Write code in CPL:
