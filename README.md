@@ -38,8 +38,9 @@ write  ->  dontwrite
   <br>To address this issue, there exists a feature which automaticaly changes the grammar in a CPL file to your own grammar.
   <br>In case you want to learn more about doing this : please follow [this link](#use-intern-features-of-cpl)
 
-### - In what language is CPL developed?
-  CPL is a language compiled in C++ using a Python compiler, however this repository includes a Python Interpreter used to test new features.
+### - Is CPL compiled?
+  CPL is a language compiled in NASM for the x86-64 CPU family, however this temporary and
+  <br>CPL will soon support more CPUs. 
   
 ### - Who is working on the CPL project?
   Sadly, I (aka Bugxit) am working alone on the CPL project, which explains the lack of updates and new features.
@@ -56,8 +57,6 @@ write  ->  dontwrite
 
 #### Key informations:
 All keywords are written using the default settings & [ ] indicate the part the developper can modify.
-<br>Also some features are not disponible in every version of CPL, for example:
-<br>[Int8](#int) does not exist in PyCPL (Python does not allow the utilisation of signed-integers)
 #### - Write:
 Format :
 ```
