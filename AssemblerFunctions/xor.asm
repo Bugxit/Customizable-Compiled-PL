@@ -29,6 +29,7 @@ __xor:
 	mov rax, [rsp+32]
 	mov rbx, [rsp+40]
 	mov rcx, [rsp+48]
+	dec rcx
 	shl rcx, 3
 	add rax, rcx
 	add rbx, rcx
