@@ -1,4 +1,4 @@
-## (C/I)Customizable Programming Language
+## Customizable Programming Language
 ## Summary :
 * [Go](#what-is-cpl-exactly) - What is CPL?
 * [Go](#get-started-with-cpl) - How to get started with CPL?
@@ -60,68 +60,14 @@ write  ->  dontwrite
 - [Go](#var) - Var
 
 #### Key informations:
-All keywords are written using the default settings & [ ] indicate the part the developper can modify.
-#### - Write:
-Format :
-```
-write ([String Object]);
-```
-Description :
-The write keyword takes a [String Object](#string-object) as an input and shows it in the console.
-Example:
-```
-write ("Hello, world!");
-  
-```
-It will give us the following output:
-```console
-Hello, world!
-```
-#### - Int:
-Format:
-```
-Int8  [String Object] = [Integer Object];
-Int16 [String Object] = [Integer Object];
-Int32 [String Object] = [Integer Object];
-Int   [String Object] = [Integer Object];
-```
-Description:
-The int keyword indicates the program to store the value represented by [[Integer Object](#integer-object)] under the name 
-<br>specified as a [[String Object](#string-object)]. The number that may follow the keyword (8 ; 16 or 32) indicates the maximum number of bits
-<br>the programm will need to use to store the specified value.
-Example:
-```
-Int8 IntOne = 13;
-write (f"{IntOne}");
-```
-We use the "write" keyword to show the value associated to IntOne ; This programm returns us the following output :
-```console
-13
-```
+
 ### The Objects:
 - [Go](#string-object) - String Object
 - [Go](#integer-object) - Integer Object
 - [Go](#boolean-object) - Boolean Object
 #### Key informations:
 
-#### String Object:
-
-#### Integer Object:
-
 ## Use intern features of CPL: 
 ## How does CPL work?
 ## Error codes:
-If you are reading this section, it is probably because you encoutered an error while trying to run your CPL code.
-<br>I do admit that some error messages aren't explicit. So, to help you understanding where you messed up 
-<br>CPL implemented error codes. Using error codes is extremly simple, just look for the number indicated in your error message in the following table:
-| Error code | Description |
-|------------|-------------|
-|N°134       |Occures when the first word of the line(keyword) is not recognised by the programm - Consider checking if you are using the right settings file - Consider checking if you misspelled it either in your program or your settings file.|
-|N°291       |Occures when you tried to declare a string without using the proper symbol - Consider checking if you are using the right settings file - Consider looking if the whole line is correct|
-|N°305       |Occures when you did not mark the line as finished using the proper symbol - Consider checking if you are using the right settings file - Consider checking if it is not a typo.|
-|N°418       |I'm a teapot... Yes, you will never get this error but you still read this... You have no life...|
-|N°560       |Occures when you closed parentheses without ever opening them - Consider counting parentheses - Consider checking if you forgot an opening parentheses|
-|N°819       |When using the "for" keyword, the third element of the line must <b>always</b> be "in" - Consider checking if you typed it right - Consider checking if you forgot spaces between words.|
-
-<br>PS: Don't search any logic between codes and descriptions, codes are generated randomly.
 
