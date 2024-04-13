@@ -48,7 +48,9 @@ def main(sFile, oFile):
             funcArgs = ""
 
             if funcName in list(funcDict.keys()): 
-                if funcType != funcDict[funcName]["type"] or funcArgs != funcDict[funcName]["args"]: exit(1)
+                if funcType != funcDict[funcName]["type"] or funcArgs != funcDict[funcName]["args"]: 
+                    print("error")
+                    exit(1)
             else: funcDict[funcName] = {'type' : funcType, 'args' : funcArgs, 'lines' : []}
             opBrack = 1
             for l in sFileArray[lineNumber+2:]:
@@ -57,11 +59,18 @@ def main(sFile, oFile):
                 if opBrack == 0: break
                 funcDict[funcName]['lines'].append(l)
 
-    if "main" not in list(funcDict.keys()): exit(1)
+    if "main" not in list(funcDict.keys()): 
+        print("error")
+        exit(1)
 
     with open(oFile, 'w') as file:
-        file.write("global __func__main:")
-        for line in sFileArray: file.write(f'{line}\n') 
+        file.write("global __func__main\n")
+        file.write("section .text\n")
+        for funcName in list(funcDict.keys()):
+            file.write(f'__func__{funcName}:\n')
+            for line in funcDict[funcName]['lines']: file.write(f'\t{line}\n')
+            if funcName != "main": file.write(f'\tret\n')
+            else: file.write("\tmov rax, 60\n\tmov rdi, 0\n\tsyscall\n")
 
 def remStr(oriStr) -> str:
     retStr = ""
