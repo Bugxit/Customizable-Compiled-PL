@@ -6,10 +6,16 @@ func main("this is a", 's', "string") -> chartruc{
     return 0;
 }
 
+int tamère;
+
 func notmain() -> inttt{
     return 12;
 }
 
+char rien;
+
 func main("this is a", 's', "string") -> chartruc{
     printf("nonononon");
 }
+
+froc tonpère;

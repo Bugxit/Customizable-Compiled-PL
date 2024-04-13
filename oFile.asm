@@ -1,8 +1,14 @@
-global __func__main
+global __main__
+section .data
+	tamère int
+	rien char
+	tonpère froc
 section .text
-__func__main:
+__main__:
 	char i = '/';
-	for(int c = 0;c < 10;c++)
+	int c = 0;
+__main__for__0:
+	c < 10;
 	{
 	write("%c", i);
 	}
@@ -11,6 +17,6 @@ __func__main:
 	mov rax, 60
 	mov rdi, 0
 	syscall
-__func__notmain:
+__notmain__:
 	return 12;
 	ret
