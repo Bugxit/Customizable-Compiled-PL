@@ -1,0 +1,9 @@
+func main("this is a", 's', "string") -> chartruc{
+    char i = '/';
+    for(int c = 0;c < 10;c++){
+        write("%c", i);
+    }
+    return 0;
+}
+
+london
