@@ -34,18 +34,37 @@ def main(sFile, oFile):
                 curLine = ""
                 continue
 
-            if not commOpen: curLine += char
-
+            if not commOpen: curLine += char        
     funcDict = {}
     globalVars = {}
     forbidLines = []
 
     for lineNumber, line in enumerate(sFileArray):
         if lineNumber in forbidLines: continue
-        if line[:4] == "func":
+        if line[:5] == "func ":                
             lineStr = remStr(line)
+            opBrack = 0
+            brackAlrdOpen = False
+            funcName, funcArgs, argsFn = "", "", -1
+            for cN, char in enumerate(lineStr[5:]):
+                if char == '(': opBrack, brackAlrdOpen = opBrack + 1, True
+                elif char == ')': opBrack += -1
+                if not brackAlrdOpen: funcName += line[cN+5]
+                else: funcArgs += line[cN+5]
+                if opBrack == 0 and brackAlrdOpen: 
+                    argsFn = cN
+                    break
+            if opBrack != 0 or not brackAlrdOpen: pass
+            funcName = funcName.strip()
+
+            print(argsFn, funcName, funcArgs, opBrack)
+            exit()
+
+            if opBrack != 0 or '(' not in lineStr[5:]: exit(1)
+
+            if '->' not in lineStr: exit(1)
             funcName = lineStr[4:].split('(', 1)[0].strip()
-            funcType = lineStr.split('->')[-1].strip()
+            funcType = lineStr.rsplit('->', 1)[-1].strip()
             funcArgs = ""
 
             if funcName in list(funcDict.keys()): 
@@ -62,18 +81,20 @@ def main(sFile, oFile):
                 if opBrack == 0: break
                 funcDict[funcName]['lines'].append(l)
         else:
+
+            """
             varType = line.split(' ', 1)[0]
             varName = line[:-1].split(' ')[-1]
             if varName in list(globalVars.keys()):
                 print("error")
                 exit(1)
             globalVars[varName] = {"type": varType}
+            """
 
     if "main" not in list(funcDict.keys()): 
         print("error")
         exit(1)
 
-    didSmt = False
     newArray = []
     newArray.append("global __main__")
     newArray.append("section .data")
@@ -86,38 +107,32 @@ def main(sFile, oFile):
         if funcName != "main": newArray.append(f'\tret')
         else: 
             newArray.append("\tmov rax, 60")
-            newArray.append("\tmov rdi, 0")
+            newArray.append("\tmov rdi, [rsp+8]")
             newArray.append("\tsyscall")
 
     sFileArray = newArray
-
-    print(sFileArray)
 
     with open(oFile, 'w') as file: 
         for line in sFileArray: file.write(f'{line}\n')
 
 def evalLines(oArray : list, stateName : str) -> list[str]:
-    newArray = []
+    retArray = []
     forNumber = 0
     forbidLines = []
     
-    for line in oArray: 
+    for lN, line in enumerate(oArray): 
         if line[:3] == "for":
-            if '(' not in line: 
-                print("error")
-                exit(1)
-            forArgs = line.split('(', 1)[1]
+            forArgs = line.split('(', 1)[1].rsplit(')', 1)[0]
             forArgs = [forArgs[:remStr(forArgs).index(';')+1].strip(), forArgs[remStr(forArgs).index(';')+1:]]
-            forArgs= [forArgs[0], forArgs[1][:remStr(forArgs[1]).index(';')+1].strip(), forArgs[1][remStr(forArgs[1]).index(';')+1:]]
-            forArgs = [forArgs[0], forArgs[1], forArgs[2][:remStr(forArgs[2]).index(')')].strip()] #Il doit y avoir un problème ! On retrouve les paranthèses dans les calculs !
-            newArray.append(f'\t{forArgs[0]}')
-            newArray.append(f'{stateName}for__{forNumber}:')
-            newArray.append(f'\t{forArgs[1]}')
+            forArgs = [forArgs[0], forArgs[1][:remStr(forArgs[1]).index(';')+1].strip(), forArgs[1][remStr(forArgs[1]).index(';')+1:]]
+            retArray.append(f'\t{forArgs[0]}')
+            retArray.append(f'{stateName}for__{forNumber}:')
+            retArray.append(f'\t{forArgs[1]}')
             forNumber += 1
-            #ici marquer les lignes
-        else: newArray.append(f'\t{line}')
+            for line in oArray[lN:]: pass #Check lines in for loop
+        else: retArray.append(f'\t{line}')
 
-    return newArray
+    return retArray
 
 def remStr(oriStr) -> str:
     retStr = ""
@@ -125,8 +140,7 @@ def remStr(oriStr) -> str:
     strOpenChar = ""
     for char in oriStr:
         if not strOpen and char in ["'", '"']:
-            strOpenChar = char
-            strOpen = True
+            strOpenChar, strOpen = char, True
             retStr += char
             continue
         elif strOpen and char == strOpenChar: strOpen = False
@@ -136,7 +150,5 @@ def remStr(oriStr) -> str:
 
     return retStr
 
-
 if __name__ == "__main__":
-
     main('file.cpl', 'oFile.asm')
