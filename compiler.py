@@ -52,26 +52,26 @@ def main(sFile, oFile):
                 if not brackAlrdOpen: funcName += line[cN+5]
                 else: funcArgs += line[cN+5]
                 if opBrack == 0 and brackAlrdOpen: 
-                    argsFn = cN
+                    argsFn = cN+5
                     break
-            if opBrack != 0 or not brackAlrdOpen: pass
+            if opBrack != 0 or not brackAlrdOpen: exit(1)
             funcName = funcName.strip()
-
-            print(argsFn, funcName, funcArgs, opBrack)
-            exit()
-
             if opBrack != 0 or '(' not in lineStr[5:]: exit(1)
 
-            if '->' not in lineStr: exit(1)
-            funcName = lineStr[4:].split('(', 1)[0].strip()
-            funcType = lineStr.rsplit('->', 1)[-1].strip()
-            funcArgs = ""
+            funcType = line[argsFn+1:].strip()
+            if funcType[:2] != "->": exit(1)
+            funcType = funcType[2:].strip()
 
-            if funcName in list(funcDict.keys()): 
-                if funcType != funcDict[funcName]["type"] or funcArgs != funcDict[funcName]["args"]: 
-                    print("error")
-                    exit(1)
-            else: funcDict[funcName] = {'type' : funcType, 'args' : funcArgs, 'lines' : []}
+            funcArgs = [funcArgs]
+            while ',' in remStr(funcArgs[-1]):
+                remArgs = remStr(funcArgs[-1])
+                funcArgs.append(funcArgs[-1][remArgs.index(",")+1:])
+                funcArgs[-2] = funcArgs[-2][:remArgs.index(",")]
+
+            if funcName in list(funcDict.keys()) and (funcType != funcDict[funcName]["type"] or funcArgs != funcDict[funcName]["args"]): 
+                print("error")
+                exit(1)
+            elif funcName not in list(funcDict.keys()): funcDict[funcName] = {'type' : funcType, 'args' : funcArgs, 'lines' : []}
             opBrack = 1
             forbidLines.append(lineNumber+1)
             for lN, l in enumerate(sFileArray[lineNumber+2:]):
@@ -81,7 +81,7 @@ def main(sFile, oFile):
                 if opBrack == 0: break
                 funcDict[funcName]['lines'].append(l)
         else:
-
+            pass
             """
             varType = line.split(' ', 1)[0]
             varName = line[:-1].split(' ')[-1]
@@ -94,6 +94,8 @@ def main(sFile, oFile):
     if "main" not in list(funcDict.keys()): 
         print("error")
         exit(1)
+
+    print(funcDict)
 
     newArray = []
     newArray.append("global __main__")
