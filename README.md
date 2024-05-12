@@ -1,4 +1,4 @@
-## Customizable Programming Language
+## Customizable & Compiled Programming Language
 ## Summary :
 * [Go](#what-is-cpl-exactly) - What is CPL?
 * [Go](#get-started-with-cpl) - How to get started with CPL?
