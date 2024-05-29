@@ -18,17 +18,22 @@ fn main(){
     for vec_line in classes_vector   { println!("#NEWCLASS:"); for line in vec_line { let (line_value, line_number) = line; println!("{line_number} - {line_value}"); } }
     for vec_line in structs_vector   { println!("#NEWSTRUCT:"); for line in vec_line { let (line_value, line_number) = line; println!("{line_number} - {line_value}"); } }
     for vec_line in functions_vector { println!("#NEWFUNC:"); for line in vec_line { let (line_value, line_number) = line; println!("{line_number} - {line_value}"); } }
+    println!("#SETTINGS:"); for line in main_settings { let (line_value, line_number) = line; println!("{line_number} - {line_value}"); }
     println!("#MAINFILE:"); for line in file_vector { let (line_value, line_number) = line; println!("{line_number} - {line_value}"); }
 }
 
 fn get_settings(lines_vector: Vec<(String, usize)>) -> (Vec<(String, usize)>, Vec<(String, usize)>)
 {
+    let mut new_file_vector : Vec<(String, usize)> = vec![];
+    let mut main_settings_vector : Vec<(String, usize)> = vec![];
+
     for (line, line_number) in lines_vector
     {
-        println!("{line_number} - {line}");
+        if line.chars().nth(0).unwrap() == '#' { main_settings_vector.push((line, line_number)); }
+        else { new_file_vector.push((line, line_number)); }
     }
 
-    (vec![], vec![])
+    (new_file_vector, main_settings_vector)
 }
 
 fn read_file(file_path : &str) -> Vec<String>
