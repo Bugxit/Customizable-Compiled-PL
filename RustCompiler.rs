@@ -1,25 +1,30 @@
 use std::env;
 use std::fs;
 
+//Debug: While removing comments, closing a string is not perfect : \" does not close the string but \\" does not either
+
 fn main(){
     let argv : Vec<String> = env::args()
                                  .collect();
 
     if argv.len() < 2 { panic!("Please enter a file name!"); }
 
+    //Get the file to compile & remove its comments
     let file_vector : Vec<String> = read_file(&argv[1]);
     let file_vector : Vec<(String, usize)> = remove_comments(file_vector);
-    let (file_vector, classes_vector)   : (Vec<(String, usize)>, Vec<Vec<(String, usize)>>) = split_blocks_from_file(file_vector, "class");
-    let (file_vector, structs_vector)   : (Vec<(String, usize)>, Vec<Vec<(String, usize)>>) = split_blocks_from_file(file_vector, "struct");
-    let (file_vector, functions_vector) : (Vec<(String, usize)>, Vec<Vec<(String, usize)>>) = split_blocks_from_file(file_vector, "func");
-    let (file_vector, main_settings)    : (Vec<(String, usize)>, Vec<(String, usize)>)        = get_settings(file_vector);
 
-    //Debug: print content of vars
-    for vec_line in classes_vector   { println!("#NEWCLASS:"); for line in vec_line { let (line_value, line_number) = line; println!("{line_number} - {line_value}"); } }
-    for vec_line in structs_vector   { println!("#NEWSTRUCT:"); for line in vec_line { let (line_value, line_number) = line; println!("{line_number} - {line_value}"); } }
-    for vec_line in functions_vector { println!("#NEWFUNC:"); for line in vec_line { let (line_value, line_number) = line; println!("{line_number} - {line_value}"); } }
-    println!("#SETTINGS:"); for line in main_settings { let (line_value, line_number) = line; println!("{line_number} - {line_value}"); }
-    println!("#MAINFILE:"); for line in file_vector { let (line_value, line_number) = line; println!("{line_number} - {line_value}"); }
+    //Separate every blocks of code from the main file
+    let (file_vector, classes_vector)   : (Vec<(String, usize)>, Vec<Vec<(String, usize)>>) = split_blocks_from_file(file_vector, "class");
+    let (file_vector, enum_vector)      : (Vec<(String, usize)>, Vec<Vec<(String, usize)>>) = split_blocks_from_file(file_vector, "enum");
+    let (file_vector, structs_vector)   : (Vec<(String, usize)>, Vec<Vec<(String, usize)>>) = split_blocks_from_file(file_vector, "struct");
+    let (file_vector, functions_vector) : (Vec<(String, usize)>, Vec<Vec<(String, usize)>>) = split_blocks_from_file(file_vector, "macro");
+    let (file_vector, macros_vector)    : (Vec<(String, usize)>, Vec<Vec<(String, usize)>>) = split_blocks_from_file(file_vector, "func");
+    let (file_vector, main_settings)    : (Vec<(String, usize)>, Vec<(String, usize)>)      = get_settings(file_vector);
+}
+
+fn handle_global_settings(settings_vector : Vec<String>) -> ()
+{   
+    //Code snipet here
 }
 
 fn get_settings(lines_vector: Vec<(String, usize)>) -> (Vec<(String, usize)>, Vec<(String, usize)>)
@@ -53,7 +58,7 @@ fn remove_comments(file_vector : Vec<String>) -> Vec<(String, usize)>
     let mut ignore_next_char : bool;
     let mut is_string_opened : bool = false;
     let mut is_comment_opened : bool = false;
-    let mut char_that_opened_screen : char = ' ';
+    let mut char_that_opened_string : char = ' ';
     let mut current_line : String = String::from("");
 
     'in_file: for (line_number, line) in file_vector.iter().enumerate()
@@ -70,10 +75,10 @@ fn remove_comments(file_vector : Vec<String>) -> Vec<(String, usize)>
             if !is_string_opened && !is_comment_opened && "\"'".contains(char_value)
             {
                 is_string_opened = true;
-                char_that_opened_screen = char_value;
+                char_that_opened_string = char_value;
             } 
 
-            else if is_string_opened && !is_comment_opened && char_value == char_that_opened_screen && /*Verify escape sequence*/ (char_number == 0 || line.chars().nth(char_number-1).unwrap() != '\\')
+            else if is_string_opened && !is_comment_opened && char_value == char_that_opened_string && /*Verify escape sequence*/ (char_number == 0 || line.chars().nth(char_number-1).unwrap() != '\\')
             {
                 is_string_opened = false;
             }
