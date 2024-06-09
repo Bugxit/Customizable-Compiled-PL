@@ -7,12 +7,18 @@ enum Option<T>
     Some(T)
 }
 
-
+enum ElementInfo
+{
+    Unknown(String),
+    Immediate(String),
+    Operand(String),
+    Function(String),
+    Variable(String)
+}
 
 struct ExpressionTree
 {
-    val_type : String,
-    function : String,
+    function : ElementInfo,
     children : Vec<ExpressionTree>
 }
 
@@ -27,51 +33,49 @@ fn __init__(&mut self, expression : String, separator_vector: Vec<String>, depth
     if split_position != Option::None
     {
         let Option::Some(split_position) = split_position else { return; }; 
-        self.val_type = String::from("operand");
-        self.function = if expression.len() > split_position { String::from(expression.chars().nth(split_position).unwrap()) } else { String::new() }; //Debug: Empty sometimes?!
-        self.children.push( ExpressionTree { val_type : String::new(), function : String::new(), children: Vec::<ExpressionTree>::new() } );
-        self.children.push( ExpressionTree { val_type : String::new(), function : String::new(), children: Vec::<ExpressionTree>::new() } );
+        self.function = if expression.len() > split_position { ElementInfo::Operand(String::from(expression.chars().nth(split_position).unwrap())) } else { ElementInfo::Operand(String::new()) }; //Debug: Empty sometimes?!
+        self.children.push( ExpressionTree { function : ElementInfo::Unknown(String::new()), children: Vec::<ExpressionTree>::new() } );
+        self.children.push( ExpressionTree { function : ElementInfo::Unknown(String::new()), children: Vec::<ExpressionTree>::new() } );
         self.children[0].__init__(String::from(&expression[..split_position]), separator_vector.clone(), depth+1);
         self.children[1].__init__(String::from(&expression[split_position+1..]), separator_vector.clone(), depth+1);
         return;
     }
 
+    let mut function_name : String = String::new();
+    let mut split_position : usize = 0;
 
-    self.function = expression;
-}
-
-fn height(&self, depth : i16) -> i16
-{
-    if self.children.len() == 0 { return depth; }
-    let mut max_depth = depth;
-    for child in &self.children 
+    while split_position < expression.len()
     {
-        let new_depth = child.height( depth+1 );
-        max_depth = if new_depth > max_depth { new_depth } else { max_depth };
+        let current_char = expression.chars().nth(split_position).unwrap();
+        if current_char == '(' { continue; }
+        function_name += &String::from(current_char);
+        split_position += 1;
     }
 
-    max_depth
-}
-
-fn len(&self) -> usize
-{
-    let mut size = self.function.len() + 2;
-    for child in self.children.iter()
+    if function_name == expression
     {
-        size += child.len();
+        //Can be a variable (remember that the value can start with 0x / 0b)
+        self.function = ElementInfo::Immediate(expression.clone());
+    } 
+    else if function_name.len() == 0
+    {
+        let (mut start, mut end) : (usize, usize) = (0, function_name.len()-1);
+        while start < end && function_name.chars().nth(start).unwrap() == '(' && function_name.chars().nth(end).unwrap() == ')'
+        {
+            start += 1;
+            end -= 1;
+        }
+        
+        //Error here if start = 0... We have a problem...
+        self.__init__(String::from(&function_name[start..end+1]), vec![String::from("^&|"), String::from("+-"), String::from("*/%")], depth);
+    
+    } 
+    else 
+    {
+        self.function = ElementInfo::Function(expression.clone());
     }
 
-    size
-}
-
-fn show(&self, depth : i16) -> ()
-{
-    if depth > 0 { for child in &self.children { child.show(depth-1); } }
-    if depth == 1 { println!(""); }
-    if depth > 0 { return; }
-    for _ in 0..( (self.len() - self.function.len() - 2) / 2) { print!(" "); }
-    print!("{}", self.function);
-    for _ in ( (self.len() - self.function.len() - 2) / 2)..self.len() { print!(" "); } 
+    //self.function = ElementInfo::Unknown(expression.clone());
 }
 
 }
@@ -124,13 +128,8 @@ fn parse_once(expression : String, mut separator_vector: Vec<String>) -> (String
 
 fn main()
 {
-    let mut root : ExpressionTree = ExpressionTree { val_type : String::new(), function: String::new()
-        , children: Vec::<ExpressionTree>::new() };
+    let mut root : ExpressionTree = ExpressionTree { function : ElementInfo::Unknown(String::new()), 
+                                                     children: Vec::<ExpressionTree>::new() };
 
     root.__init__(String::from("3*2-1+5/8"), vec![String::from("^&|"), String::from("+-"), String::from("*/%")], 0);
-
-    println!("{} - {}", root.len(), root.height(1));
-    root.show(0);
-    println!("");
-    for i in 1..root.height(1) { root.show(i); }
 }
