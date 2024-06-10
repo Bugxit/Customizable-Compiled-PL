@@ -15,7 +15,7 @@ fn main(){
 
     //Separate every blocks of code from the main file
     let (file_vector, classes_vector)   : (Vec<(String, usize)>, Vec<Vec<(String, usize)>>) = split_blocks_from_file(file_vector, "class");
-    let (file_vector, enum_vector)      : (Vec<(String, usize)>, Vec<Vec<(String, usize)>>) = split_blocks_from_file(file_vector, "enum");
+    let (file_vector, enums_vector)      : (Vec<(String, usize)>, Vec<Vec<(String, usize)>>) = split_blocks_from_file(file_vector, "enum");
     let (file_vector, structs_vector)   : (Vec<(String, usize)>, Vec<Vec<(String, usize)>>) = split_blocks_from_file(file_vector, "struct");
     let (file_vector, functions_vector) : (Vec<(String, usize)>, Vec<Vec<(String, usize)>>) = split_blocks_from_file(file_vector, "macro");
     let (file_vector, macros_vector)    : (Vec<(String, usize)>, Vec<Vec<(String, usize)>>) = split_blocks_from_file(file_vector, "func");
